@@ -28,3 +28,13 @@
     background-color: #0184be;
     font-family: "Gentium Book Basic", serif;
 }
+
+[alt=pokeball].left{
+    width: 250px;
+    float: left;
+}
+
+[alt=pokeball].right{
+    width: 250px;
+    float: right;
+}
