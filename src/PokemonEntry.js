@@ -3,8 +3,8 @@ import './PokemonEntry.css'
 
 class PokemonEntry extends Component {
    state = {
-    poke: {
-    }
+    poke: {},
+    moveSet: []
   }
   
   
@@ -17,6 +17,7 @@ class PokemonEntry extends Component {
     fetch(`http://pokeapi.co/api/v2/pokemon/${props.match.params.pokeName}`)
       .then(response => response.json())
       .then(poke => this.setState({ poke }))
+      .then(this.createMoveSet.bind(this)) 
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,6 +25,17 @@ class PokemonEntry extends Component {
     if (locationChanged) {
       this.fetchUserData(nextProps)
     }
+  }
+
+  createMoveSet() {
+    const moveset = []
+    while (moveset.length !== 4){
+      const index = Math.floor(Math.random() * (80))
+      if (index <= this.state.poke.moves.length){
+        moveset.push(this.state.poke.moves[index].move.name)
+      }
+    }
+    this.setState({ moveSet: moveset })
   }
 
   render() {
@@ -34,6 +46,7 @@ class PokemonEntry extends Component {
         <h3>Weight: {poke.weight}</h3>
         <h3>Height: {poke.height}</h3>
         <h3>Id: {poke.id}</h3>
+        <h3>One possible moveset: {(this.state.moveSet.toString())}</h3>
       </div>
     )
   }
